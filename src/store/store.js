@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import PionyAPI from '../api/Piony.js'
 
 Vue.use(Vuex)
 

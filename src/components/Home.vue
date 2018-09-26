@@ -24,8 +24,8 @@
     </b-container>
     <b-container>
         <b-list-group>
-            <b-list-group-item button v-for="(patient, index) in patients" v-bind:key="index">
-                {{ patient.name }}
+            <b-list-group-item button v-for="(patient, index) in patientList" v-bind:key="patient.id">
+                {{ patient.id }} {{ patient.firstName }} {{ patient.lastName}}
             </b-list-group-item>
         </b-list-group>
     </b-container>
@@ -36,13 +36,16 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
+import { mapGetters} from 'vuex'
 import NewPatient from './NewPatient.vue'
+import PionyAPI from '../api/Piony.js'
 
 export default Vue.extend({
     name: 'Home',
     data() {
         return {
-            msg: 'Blabla Welcome'
+            msg: 'blablbla',
+            patientList: [],
         }
 
     },
@@ -53,6 +56,16 @@ export default Vue.extend({
     },
     components: {
         NewPatient,
+    },
+    methods: {
+        loadPatients() {
+            PionyAPI.getPatients().then((patients) =>{
+                this.patientList = patients;
+            })
+        },
+    },
+    mounted() {
+        this.loadPatients();
     }
 })
 </script>
