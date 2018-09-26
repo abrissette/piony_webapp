@@ -3,13 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export const pionystore = new Vuex.Store({
+export default new Vuex.Store({
     state: {
-
+        patients: [
+            {
+                name: 'John Oliver',
+                id: '1',
+                address: '1802 Nipomo Ave',
+                city: 'Long Beach',
+                state: 'California',
+                risk: 'high'
+            },
+            {
+                name: 'Random Jane',
+                id: '2',
+                address: '321 blabla Ave',
+                city: 'Long Beach',
+                state: 'California',
+                risk: 'low'
+            }
+        ],
     },
     mutations: {
 
     }
 });
-
-export default pionystore;
