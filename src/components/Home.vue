@@ -65,9 +65,9 @@ export default Vue.extend({
     },
     methods: {
         loadPatients() {
-            PionyAPI.getPatients().then((patients) =>{
-                this.patientList = patients;
-            })
+            PionyAPI.getPatients().then((patients) => {
+                this.$store.commit('setPatients', {patients: patients})
+                this.patientList = this.$store.state.patients;})
         },
         showNewPatientModal() {
             this.$refs.newPatientModal.show();
@@ -82,7 +82,6 @@ export default Vue.extend({
     },
     mounted() {
         this.loadPatients();
-        console.log("BALABLALBAL");
     }
 })
 </script>

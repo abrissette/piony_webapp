@@ -35,6 +35,9 @@ export default new Vuex.Store({
         activePatient: {},
     },
     mutations: {
+        setPatients(state, src) {
+            this.state.patients = src.patients;
+        },
         setActivePatient(state, src) {
             console.log("setActivePatient index: " + src.index);
             this.state.activePatient = this.state.patients[src.index];
