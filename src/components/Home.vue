@@ -14,9 +14,9 @@
                 </div>
             </b-col>
             <b-col sm="4" class="text-center">
-                    <b-btn v-b-modal.newPatientModal variant="primary">New Patient
+                    <b-btn v-on:click="showNewPatientModal()" variant="primary">New Patient
                     </b-btn>
-                    <b-modal hide-footer id="newPatientModal">
+                    <b-modal hide-footer ref="newPatientModal">
                         <NewPatient/>
                     </b-modal>
             </b-col>
@@ -24,9 +24,12 @@
     </b-container>
     <b-container>
         <b-list-group>
-            <b-list-group-item button v-for="(patient, index) in patientList" v-bind:key="patient.id">
+            <b-list-group-item button v-for="(patient, index) in patientList" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
                 {{ patient.id }} {{ patient.firstName }} {{ patient.lastName}}
             </b-list-group-item>
+            <b-modal hide-footer ref="patientInfoModal">
+                <PatientInfo/>
+            </b-modal>
         </b-list-group>
     </b-container>
   </b-container>
@@ -38,6 +41,7 @@ import Vue from 'vue'
 import { mapState } from 'vuex'
 import { mapGetters} from 'vuex'
 import NewPatient from './NewPatient.vue'
+import PatientInfo from './PatientInfo.vue'
 import PionyAPI from '../api/Piony.js'
 
 export default Vue.extend({
@@ -52,10 +56,12 @@ export default Vue.extend({
     computed: {
         ...mapState([
             'patients',
+            'activePatient',
         ]),
     },
     components: {
         NewPatient,
+        PatientInfo,
     },
     methods: {
         loadPatients() {
@@ -63,9 +69,20 @@ export default Vue.extend({
                 this.patientList = patients;
             })
         },
+        showNewPatientModal() {
+            this.$refs.newPatientModal.show();
+        },
+        showPatientInformation(index) {
+            this.$store.commit('setActivePatient', {
+                index: index});
+            this.$refs.patientInfoModal.show();
+            console.log("index: " + index);
+
+        }
     },
     mounted() {
         this.loadPatients();
+        console.log("BALABLALBAL");
     }
 })
 </script>

@@ -8,26 +8,38 @@ export default new Vuex.Store({
     state: {
         patients: [
             {
-                name: 'John Oliver',
                 id: '1',
-                address: '1802 Nipomo Ave',
+                firstName: 'John',
+                lastName: 'Oliver',
+                streerAdress: '1802 Nipomo Ave',
                 city: 'Long Beach',
                 state: 'California',
-                risk: 'high'
+                postalCode: '32142',
+                mobilePhone: '421 543 3214',
+                conditions: {},
+                status: 'active'
             },
             {
-                name: 'Random Jane',
                 id: '2',
-                address: '321 blabla Ave',
-                city: 'Long Beach',
-                state: 'California',
-                risk: 'low'
+                firstName: 'Random',
+                lastName: 'Jane',
+                streerAdress: '5412 Nipomo Ave',
+                city: 'New York',
+                state: 'New York',
+                postalCode: '85941',
+                mobilePhone: '412 876 6543',
+                conditions: {},
+                status: 'active'
             }
         ],
-        displayNewModal: false,
-        displayPatientModal: true,
+        activePatient: {},
     },
     mutations: {
+        setActivePatient(state, src) {
+            console.log("setActivePatient index: " + src.index);
+            this.state.activePatient = this.state.patients[src.index];
+            console.log("activePAtient: " + JSON.stringify(this.state.activePatient));
+        },
 
     }
 });
