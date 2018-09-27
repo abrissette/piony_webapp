@@ -24,6 +24,8 @@ export default new Vuex.Store({
                 risk: 'low'
             }
         ],
+        displayNewModal: false,
+        displayPatientModal: true,
     },
     mutations: {
 

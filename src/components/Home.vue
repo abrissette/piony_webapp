@@ -16,7 +16,7 @@
             <b-col sm="4" class="text-center">
                     <b-btn v-b-modal.newPatientModal variant="primary">New Patient
                     </b-btn>
-                    <b-modal id="newPatientModal">
+                    <b-modal hide-footer id="newPatientModal">
                         <NewPatient/>
                     </b-modal>
             </b-col>
