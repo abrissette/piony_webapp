@@ -29,5 +29,16 @@ export default {
         .catch ((error) => {
             console.log(error);
         })
+    },
+    getPatientRisk(postalCode) {
+        var url = 'https://open.propellerhealth.com/prod/forecast?postalCode=' + postalCode + '&latitude=0&longitude=0';
+        axios.get(url)
+            .then((response) => {
+                var risk = response.data.properties.code;
+                return risk;
+            })
+            .catch ((error) => {
+                console.log(error);
+            })
     }
 }

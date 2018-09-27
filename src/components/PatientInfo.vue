@@ -1,5 +1,25 @@
 <template>
-  <b-form class="sm-modal" @submit="updatePatient">
+  <b-form class="sm-modal" @submit="updatePatientInformation">
+      <b-form-group id="patientIdGroup"
+                    label="Id:"
+                    label-for="patientId">
+        <b-form-input id="patientId"
+                    type="text"
+                    v-model="patientInfo.id"
+                    required
+                    placeholder="Id">
+        </b-form-input>
+      </b-form-group>
+      <b-form-group id="patientRiskGroup"
+                    label="Risk:"
+                    label-for="patientRisk">
+        <b-form-input id="patientRisk"
+                    type="text"
+                    v-model="patientInfo.risk"
+                    required
+                    placeholder="Risk">
+        </b-form-input>
+      </b-form-group>
       <b-form-group id="patientFirstNameGroup"
                     label="First Name:"
                     label-for="patientFirstName">
@@ -89,15 +109,17 @@ export default Vue.extend({
     data () {
         return {
             patientInfo: {
+            id: '',
             firstName: '',
             lastName: '',
-            streerAdress: 'dtfvyg',
+            streerAdress: '',
             city: '',
             state: '',
             postalCode: '',
             mobilePhone: '',
             conditions: {},
-            status: null
+            status: null,
+            risk: ''
 
         },
             statuses: [
@@ -114,14 +136,18 @@ export default Vue.extend({
   },
   watch: {
       isActivePatientChange(patient) {
-          this.patientInfo = patient;
+          var tempPatient = patient;
+          PionyAPI.getPatientRisk(patient.postalCode).then((risk) => {
+              tempPatient.risk = risk;
+              this.patientInfo = tempPatient;
+          });
       }
   },
   methods: {
       loadPatient() {
           this.patientInfo = this.$store.state.activePatient;
       },
-      updatePatient (evt) {
+      updatePatientInformation (evt) {
         evt.preventDefault();
         PionyAPI.addNewPatient(this.patientInfo);
         this.show = false;

@@ -67,7 +67,8 @@ export default Vue.extend({
         loadPatients() {
             PionyAPI.getPatients().then((patients) => {
                 this.$store.commit('setPatients', {patients: patients})
-                this.patientList = this.$store.state.patients;})
+                this.patientList = this.$store.state.patients;
+            })
         },
         showNewPatientModal() {
             this.$refs.newPatientModal.show();
