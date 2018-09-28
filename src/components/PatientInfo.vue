@@ -18,7 +18,6 @@
                     type="text"
                     :value="activePatient.firstName"
                     required
-                    disabled
                     placeholder="Enter First Name">
         </b-form-input>
       </b-form-group>
@@ -29,7 +28,6 @@
                     type="text"
                     :value="activePatient.lastName"
                     required
-                    disabled
                     placeholder="Enter Last Name">
         </b-form-input>
       </b-form-group>
@@ -39,7 +37,6 @@
         <b-form-input id="patientStreetAddress"
                     type="text"
                     :value="activePatient.streerAdress"
-                    disabled
                     placeholder="Enter Street Address">
         </b-form-input>
       </b-form-group>
@@ -49,7 +46,6 @@
         <b-form-input id="patientCity"
                     type="text"
                     :value="activePatient.city"
-                    disabled
                     placeholder="Enter City">
         </b-form-input>
       </b-form-group>
@@ -59,7 +55,6 @@
         <b-form-input id="patientState"
                     type="text"
                     :value="activePatient.state"
-                    disabled
                     placeholder="Enter State">
         </b-form-input>
       </b-form-group>
@@ -70,7 +65,6 @@
                     type="text"
                     :value="activePatient.postalCode"
                     required
-                    disabled
                     placeholder="Enter Postal">
         </b-form-input>
       </b-form-group>
@@ -81,7 +75,6 @@
                     type="text"
                     :value="activePatient.mobilePhone"
                     placeholder="Enter Phone"
-                    disabled
                     required>
         </b-form-input>
       </b-form-group>
@@ -90,11 +83,11 @@
                     label-for="patientStatus">
         <b-form-select id="patientStatus"
                     :options="statuses"
-                    :value="activePatient.status"
-                    disabled>
+                    :value="activePatient.status">
         </b-form-select>
       </b-form-group>
-    <b-button type="submit" variant="primary">Update</b-button>
+    <b-button type="submit" variant="primary">UPDATE</b-button>
+    <b-button type="submit" variant="danger">DELETE</b-button>
   </b-form>
 </template>
 

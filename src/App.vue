@@ -19,14 +19,6 @@ export default Vue.extend({
       NewPatient,
       PatientInfo
   },
-  computed: {
-      displayNewPatientModal() {
-          return this.$store.state.displayNewModal;
-      },
-      displayPatientInfoModal() {
-          return this.$store.state.displayPatientModal;
-      }
-  }
 })
 </script>
 

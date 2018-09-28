@@ -3,31 +3,24 @@
     <b-container class="mb-4">
         <b-row>
             <b-col sm="8" class="mb-3">
-                <div>
-                  <b-input-group>
-                    <b-form-input placeholder="Search by patient ID"></b-form-input>
-                    <b-input-group-append>
-                      <b-btn variant="primary">Search</b-btn>
-                    </b-input-group-append>
-                  </b-input-group>
-                </div>
+                <SearchBar/>
             </b-col>
             <b-col sm="4" class="text-sm-right text-center">
-                    <b-button btn-lg btn-block v-on:click="showNewPatientModal()" variant="primary">New Patient
-                    </b-button>
-                    <b-modal hide-footer ref="newPatientModal">
-                        <NewPatient/>
-                    </b-modal>
+                <b-button btn-lg btn-block v-b-modal.newPatientModal variant="primary">New Patient
+                </b-button>
+                <b-modal hide-footer id="newPatientModal">
+                    <NewPatient/>
+                </b-modal>
             </b-col>
         </b-row>
     </b-container>
     <b-container class=".patient-list-container">
         <h3 class="text-center">Patient List:</h3>
         <b-list-group>
-            <b-list-group-item button v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
-                {{ patient.id }} {{ patient.firstName }} {{ patient.lastName}}
+            <b-list-group-item button v-b-modal.patientInfoModal v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
+                {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }}
             </b-list-group-item>
-            <b-modal hide-footer ref="patientInfoModal">
+            <b-modal hide-footer id="patientInfoModal">
                 <PatientInfo/>
             </b-modal>
         </b-list-group>
@@ -39,9 +32,11 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import { mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import NewPatient from './NewPatient.vue'
 import PatientInfo from './PatientInfo.vue'
+import SearchBar from './SearchBar.vue'
 import PionyAPI from '../api/Piony.js'
 
 export default Vue.extend({
@@ -61,27 +56,19 @@ export default Vue.extend({
     components: {
         NewPatient,
         PatientInfo,
+        SearchBar,
     },
     methods: {
-        loadPatientList() {
-            PionyAPI.getPatients().then((patients) => {
-                this.$store.commit('setPatients', {patients: patients})
-            })
-        },
-        showNewPatientModal() {
-            this.$refs.newPatientModal.show();
-        },
+        ...mapActions({
+            loadPatients: 'setPatients',
+            populateActivePatient: 'setActivePatientRisk',
+        }),
         showPatientInformation(index) {
-            this.$store.commit('setActivePatient', {index: index});
-            var promise = PionyAPI.getPatientRiskInfo(this.activePatient.postalCode);
-            promise.then((risk) => {
-                this.$store.commit('setActivePatientRisk', {risk: risk});
-            })
-            this.$refs.patientInfoModal.show();
+            this.populateActivePatient({type: 'index', index: index});
         }
     },
     mounted() {
-        this.loadPatientList();
+        this.loadPatients();
     }
 })
 </script>
