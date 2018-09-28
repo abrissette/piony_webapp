@@ -1,16 +1,5 @@
 <template>
   <b-form class="sm-modal text-center" @submit="updatePatientInformation">
-      <b-form-group id="patientIdGroup"
-                    label="Id:"
-                    label-for="patientId">
-        <b-form-input id="patientId"
-                    type="text"
-                    :value="activePatient.id"
-                    required
-                    disabled
-                    placeholder="Id">
-        </b-form-input>
-      </b-form-group>
       <b-form-group id="patientRiskGroup"
                     label="Risk:"
                     label-for="patientRisk">
