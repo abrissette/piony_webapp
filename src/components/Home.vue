@@ -24,7 +24,7 @@
     </b-container>
     <b-container>
         <b-list-group>
-            <b-list-group-item button v-for="(patient, index) in patientList" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
+            <b-list-group-item button v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
                 {{ patient.id }} {{ patient.firstName }} {{ patient.lastName}}
             </b-list-group-item>
             <b-modal hide-footer ref="patientInfoModal">
@@ -49,40 +49,39 @@ export default Vue.extend({
     data() {
         return {
             msg: 'blablbla',
-            patientList: [],
         }
 
     },
     computed: {
-        ...mapState([
-            'patients',
-            'activePatient',
-        ]),
+        ...mapState({
+            patients: 'patients',
+            activePatient: 'activePatient',
+        }),
     },
     components: {
         NewPatient,
         PatientInfo,
     },
     methods: {
-        loadPatients() {
+        loadPatientList() {
             PionyAPI.getPatients().then((patients) => {
                 this.$store.commit('setPatients', {patients: patients})
-                this.patientList = this.$store.state.patients;
             })
         },
         showNewPatientModal() {
             this.$refs.newPatientModal.show();
         },
         showPatientInformation(index) {
-            this.$store.commit('setActivePatient', {
-                index: index});
+            this.$store.commit('setActivePatient', {index: index});
+            var promise = PionyAPI.getPatientRiskInfo(this.activePatient.postalCode);
+            promise.then((risk) => {
+                this.$store.commit('setActivePatientRisk', {risk: risk});
+            })
             this.$refs.patientInfoModal.show();
-            console.log("index: " + index);
-
         }
     },
     mounted() {
-        this.loadPatients();
+        this.loadPatientList();
     }
 })
 </script>

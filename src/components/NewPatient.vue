@@ -113,6 +113,7 @@ export default Vue.extend({
         evt.preventDefault();
         PionyAPI.addNewPatient(this.form);
         this.show = false;
+        this.$refs.newPatientModal.hide();
     },
     onReset (evt) {
       evt.preventDefault();
