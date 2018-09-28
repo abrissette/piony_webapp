@@ -1,6 +1,6 @@
 <template>
-    <header>
-        <b-navbar toggleable="md" type="dark" variant="info">
+    <header class="mb-4">
+        <b-navbar toggleable="md" type="dark" variant="primary">
 
           <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -9,7 +9,7 @@
           <b-collapse is-nav id="nav_collapse">
 
             <b-navbar-nav class="ml-auto">
-              <b-nav-item href="#">Patients</b-nav-item>
+              <b-nav-item href="/">Patients</b-nav-item>
               <b-nav-item href="#">About</b-nav-item>
             </b-navbar-nav>
 

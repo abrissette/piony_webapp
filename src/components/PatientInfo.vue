@@ -1,11 +1,11 @@
 <template>
-  <b-form class="sm-modal" @submit="updatePatientInformation">
+  <b-form class="sm-modal text-center" @submit="updatePatientInformation">
       <b-form-group id="patientIdGroup"
                     label="Id:"
                     label-for="patientId">
         <b-form-input id="patientId"
                     type="text"
-                    v-model="activePatient.id"
+                    :value="activePatient.id"
                     required
                     disabled
                     placeholder="Id">
@@ -16,7 +16,7 @@
                     label-for="patientRisk">
         <b-form-input id="patientRisk"
                     type="text"
-                    v-model="activePatientRisk"
+                    :value="activePatientRisk"
                     required
                     disabled
                     placeholder="Risk">
@@ -27,7 +27,7 @@
                     label-for="patientFirstName">
         <b-form-input id="patientFirstName"
                     type="text"
-                    v-model="activePatient.firstName"
+                    :value="activePatient.firstName"
                     required
                     disabled
                     placeholder="Enter First Name">
@@ -38,7 +38,7 @@
                     label-for="patientLastName">
         <b-form-input id="patientLastName"
                     type="text"
-                    v-model="activePatient.lastName"
+                    :value="activePatient.lastName"
                     required
                     disabled
                     placeholder="Enter Last Name">
@@ -49,7 +49,7 @@
                     label-for="patientStreetAddress">
         <b-form-input id="patientStreetAddress"
                     type="text"
-                    v-model="activePatient.streerAdress"
+                    :value="activePatient.streerAdress"
                     disabled
                     placeholder="Enter Street Address">
         </b-form-input>
@@ -59,7 +59,7 @@
                     label-for="patientCity">
         <b-form-input id="patientCity"
                     type="text"
-                    v-model="activePatient.city"
+                    :value="activePatient.city"
                     disabled
                     placeholder="Enter City">
         </b-form-input>
@@ -69,7 +69,7 @@
                     label-for="patientState">
         <b-form-input id="patientState"
                     type="text"
-                    v-model="activePatient.state"
+                    :value="activePatient.state"
                     disabled
                     placeholder="Enter State">
         </b-form-input>
@@ -79,7 +79,7 @@
                     label-for="patientPostal">
         <b-form-input id="patientPostal"
                     type="text"
-                    v-model="activePatient.postalCode"
+                    :value="activePatient.postalCode"
                     required
                     disabled
                     placeholder="Enter Postal">
@@ -90,7 +90,7 @@
                     label-for="patientPhone">
         <b-form-input id="patientPhone"
                     type="text"
-                    v-model="activePatient.mobilePhone"
+                    :value="activePatient.mobilePhone"
                     placeholder="Enter Phone"
                     disabled
                     required>
@@ -101,7 +101,7 @@
                     label-for="patientStatus">
         <b-form-select id="patientStatus"
                     :options="statuses"
-                    v-model="activePatient.status"
+                    :value="activePatient.status"
                     disabled>
         </b-form-select>
       </b-form-group>

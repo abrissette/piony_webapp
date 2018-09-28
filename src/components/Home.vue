@@ -1,28 +1,28 @@
 <template>
   <div class="wrapper home">
-  <b-container class="testing-class">
-    <b-container>
+    <b-container class="mb-4">
         <b-row>
-            <b-col sm="8">
+            <b-col sm="8" class="mb-3">
                 <div>
                   <b-input-group>
                     <b-form-input placeholder="Search by patient ID"></b-form-input>
                     <b-input-group-append>
-                      <b-btn variant="info">Search</b-btn>
+                      <b-btn variant="primary">Search</b-btn>
                     </b-input-group-append>
                   </b-input-group>
                 </div>
             </b-col>
-            <b-col sm="4" class="text-center">
-                    <b-btn v-on:click="showNewPatientModal()" variant="primary">New Patient
-                    </b-btn>
+            <b-col sm="4" class="text-sm-right text-center">
+                    <b-button btn-lg btn-block v-on:click="showNewPatientModal()" variant="primary">New Patient
+                    </b-button>
                     <b-modal hide-footer ref="newPatientModal">
                         <NewPatient/>
                     </b-modal>
             </b-col>
         </b-row>
     </b-container>
-    <b-container>
+    <b-container class=".patient-list-container">
+        <h3 class="text-center">Patient List:</h3>
         <b-list-group>
             <b-list-group-item button v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
                 {{ patient.id }} {{ patient.firstName }} {{ patient.lastName}}
@@ -91,6 +91,11 @@ export default Vue.extend({
 .testing-class {
     background-color: pink;
     border:1px solid black;
+}
+
+.patient-list-container {
+    max-height: 700px;
+    overflow-y: auto;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <b-form class="sm-modal" @submit="onSubmit" @reset="onReset" v-if="show">
+  <b-form class="sm-modal text-center" @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="newFirstNameGroup"
                     label="First Name:"
                     label-for="newFirstName">
@@ -112,7 +112,7 @@ export default Vue.extend({
     onSubmit (evt) {
         evt.preventDefault();
         PionyAPI.addNewPatient(this.form);
-        this.show = false;
+        this.show =false;
         this.$refs.newPatientModal.hide();
     },
     onReset (evt) {
