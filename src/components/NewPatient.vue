@@ -1,4 +1,5 @@
 <template>
+<b-modal hide-footer id="newPatientModal" ref="newPatientModal">
   <b-form class="sm-modal text-center" @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="newFirstNameGroup"
                     label="First Name:"
@@ -78,6 +79,7 @@
     <b-button type="submit" variant="primary">Submit</b-button>
     <b-button type="reset" variant="danger">Reset</b-button>
   </b-form>
+</b-modal>
 </template>
 
 <script>

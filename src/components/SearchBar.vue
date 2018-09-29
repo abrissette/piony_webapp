@@ -6,7 +6,7 @@
           <b-btn v-on:click="showSearchedPatientInformation()" variant="primary">Search</b-btn>
         </b-input-group-append>
         </b-input-group>
-        <b-modal ref="invalidPatientModal">
+        <b-modal ok-only ref="invalidPatientModal">
             <p>Patient with the requested id does not exist</p>
         </b-modal>
         <b-modal hide-footer ref="patientInfoModal">

@@ -1,4 +1,5 @@
 <template>
+<b-modal hide-footer id="patientInfoModal" ref="patientInformationModal">
   <b-form class="sm-modal text-center" @submit="updatePatientInformation">
       <b-form-group id="patientRiskGroup"
                     label="Risk:"
@@ -87,14 +88,20 @@
         </b-form-select>
       </b-form-group>
     <b-button type="submit" variant="primary">UPDATE</b-button>
-    <b-button type="submit" variant="danger">DELETE</b-button>
+    <b-button v-on:click="showConfirmationModal()" variant="danger">DELETE</b-button>
+    <b-modal size="sm" hide-footer ref="confirmDeleteModal">
+        Are you sure you want to delete?
+        <b-button v-on:click="deletePatient()" variant="danger">DELETE FOREVER</b-button>
+    </b-modal>
   </b-form>
+</b-modal>
 </template>
 
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import PionyAPI from '../api/Piony.js'
 
 export default Vue.extend({
@@ -130,9 +137,20 @@ export default Vue.extend({
       })
   },
   methods: {
+      ...mapActions({
+          deleteThisPatient: 'deleteActivePatient',
+      }),
       updatePatientInformation (evt) {
-        evt.preventDefault();
-    },
+          evt.preventDefault();
+      },
+      deletePatient() {
+          this.deleteThisPatient();
+          this.$refs.confirmDeleteModal.hide();
+          this.$refs.patientInformationModal.hide();
+      },
+      showConfirmationModal() {
+          this.$refs.confirmDeleteModal.show();
+      },
   },
 })
 </script>

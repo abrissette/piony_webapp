@@ -53,7 +53,6 @@ export default new Vuex.Store({
             commit('changeActivePatientByIndex', {index: src.index});
         },
         setActivePatientById({ commit }, src) {
-            console.log('patient id:' + src.id);
             var promise = PionyAPI.getPatient(src.id);
             if (typeof promise !== "undefied") {
                 promise.then((patient) => {
@@ -76,6 +75,14 @@ export default new Vuex.Store({
             }
             else {
                 commit('changeActivePatientRisk', {risk: 'risk not found'});
+            }
+        },
+        deleteActivePatient({ commit, state }, src) {
+            var promise = PionyAPI.deletePatient(state.activePatient.id);
+            if (typeof promise !== "undefined") {
+                promise.then(() => {
+                    commit('changeActivePatientById', {patient: {}});
+                })
             }
         }
     },

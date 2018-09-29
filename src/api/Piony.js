@@ -9,7 +9,6 @@ export default {
         var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients';
         return (
             axios.get(url).then((response) => {
-                    console.log(response);
                     var patients = response.data;
                     return patients;
                 }).catch ((error) => {
@@ -21,7 +20,6 @@ export default {
         var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + id;
         return (
             axios.get(url).then((response) => {
-                console.log(response);
                 var patient = response.data;
                 console.log('returned patient is: ' + JSON.stringify(patient));
                 return patient;
@@ -34,7 +32,14 @@ export default {
         axios.post('https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients', {
             body: patient
         }).then(response => {
-            console.log(response);
+        }).catch ((error) => {
+            console.log(error);
+        })
+    },
+    deletePatient(id) {
+        var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + id;
+        axios.delete(url).then((response) => {
+            console.log('delete success: ' + JSON.stringify(response));
         }).catch ((error) => {
             console.log(error);
         })

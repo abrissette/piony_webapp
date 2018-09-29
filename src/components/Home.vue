@@ -6,11 +6,10 @@
                 <SearchBar/>
             </b-col>
             <b-col sm="4" class="text-sm-right text-center">
-                <b-button btn-lg btn-block v-b-modal.newPatientModal variant="primary">New Patient
+                <b-button btn-lg btn-block v-b-modal.newPatientModal variant="primary">
+                    New Patient
                 </b-button>
-                <b-modal hide-footer id="newPatientModal">
-                    <NewPatient/>
-                </b-modal>
+                <NewPatient/>
             </b-col>
         </b-row>
     </b-container>
@@ -20,9 +19,7 @@
             <b-list-group-item button v-b-modal.patientInfoModal v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
                 {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }}
             </b-list-group-item>
-            <b-modal hide-footer id="patientInfoModal">
-                <PatientInfo/>
-            </b-modal>
+            <patientInfo/>
         </b-list-group>
     </b-container>
   </b-container>
