@@ -3,13 +3,12 @@
         <b-input-group>
         <b-form-input v-model="searchInput" placeholder="Search by patient ID"></b-form-input>
         <b-input-group-append>
-          <b-btn v-on:click="showSearchedPatientInformation()" variant="primary">Search</b-btn>
+          <b-btn v-b-modal.patientInfoModal v-on:click="showSearchedPatientInformation()" variant="primary">Search</b-btn>
         </b-input-group-append>
         </b-input-group>
         <b-modal ok-only ref="invalidPatientModal">
             <p>Patient with the requested id does not exist</p>
         </b-modal>
-        <PatientInfo/>
     </div>
 </template>
 
@@ -42,8 +41,7 @@ export default Vue.extend({
         }),
         showSearchedPatientInformation() {
             if (this.searchInput) {
-                this.populateActivePatient({type: 'id', id: this.searchInput});
-                this.$refs.patientInformationModal.show();
+                this.populateActivePatient({type: 'search', id: this.searchInput});
             }
             else {
                 this.$refs.invalidPatientModal.show()

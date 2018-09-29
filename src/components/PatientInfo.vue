@@ -126,10 +126,11 @@ export default Vue.extend({
   },
   computed: {
       ...mapGetters({
-          activePatient: 'getActivePatient',
       }),
       ...mapState({
           activePatientRisk: 'activePatientRisk',
+          activePatient: 'activePatient',
+          showPatientModal: 'showPatientModal',
       })
   },
   watch: {

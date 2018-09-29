@@ -17,7 +17,7 @@
         <h3 class="text-center">Patient List:</h3>
         <b-list-group>
             <b-list-group-item button v-b-modal.patientInfoModal v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
-                {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }}
+                {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }} | id: {{ patient.id }}
             </b-list-group-item>
             <patientInfo/>
         </b-list-group>
@@ -46,8 +46,8 @@ export default Vue.extend({
     },
     computed: {
         ...mapState({
-            patients: 'patients',
             activePatient: 'activePatient',
+            patients: 'patients',
         }),
     },
     components: {
@@ -59,6 +59,7 @@ export default Vue.extend({
         ...mapActions({
             loadPatients: 'setPatients',
             populateActivePatient: 'setActivePatientRisk',
+            showModal: 'changeShowPatientModal',
         }),
         showPatientInformation(index) {
             this.populateActivePatient({type: 'index', index: index});

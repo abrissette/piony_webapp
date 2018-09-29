@@ -21,7 +21,6 @@ export default {
         return (
             axios.get(url).then((response) => {
                 var patient = response.data;
-                console.log('getPatient patient: ' + JSON.stringify(patient));
                 return patient;
             }).catch ((error) => {
                 console.log('getPatient error:' + error);
@@ -77,7 +76,6 @@ export default {
             var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + patient.id;
             return (
                 axios.put(url, {body: patient}).then((response) => {
-                    console.log(JSON.stringify(response));
                 }).catch((error) => {
                     console.log('updatePatient error:' + error)
                 })

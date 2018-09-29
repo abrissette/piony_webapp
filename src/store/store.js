@@ -21,13 +21,14 @@ export default new Vuex.Store({
         },
         activePatientRisk: '',
         newPatientId: 8,
+        showPatientModal : false,
     },
     getters: {
-        getActivePatient: state => {
-            return state.activePatient;
-        },
     },
     mutations: {
+        changeShowPatientModal(state) {
+            state.showPatientModal = !state.showPatientModal;
+        },
         changePatients(state, src) {
             state.patients = src.patients;
         },
@@ -48,13 +49,13 @@ export default new Vuex.Store({
             state.newPatientId++;
         },
         deletePatient(state, src) {
-            var index = state.patients.findIndex(patient => patient.id === src.id);
+            var index = state.patients.findIndex(patient => patient.id == src.id);
             if (index > -1) {
                 state.patients.splice(index, 1);
             }
         },
         updatePatient(state, src) {
-            var index = state.patients.findIndex(patient => patient.id === src.patient.id);
+            var index = state.patients.findIndex(patient => patient.id == src.patient.id);
             if (index > -1) {
                 state.patients[index] = src.patient;
             }
@@ -88,22 +89,38 @@ export default new Vuex.Store({
                 })
             }
         },
+        setActivePatientSearch({ commit, state }, src) {
+            console.log('requested id: ' + src.id);
+            console.log('all patients: ' + JSON.stringify(state.patients));
+            var index = state.patients.findIndex(patient => patient.id == src.id);
+            console.log('found index: ' + index);
+            if (index > -1) {
+                console.log('patient: ' + JSON.stringify(state.patients[index]));
+                commit('changeActivePatientById', {patient: state.patients[index]});
+            }
+        },
         async setActivePatientRisk({ commit, dispatch, state }, src) {
             if (src.type == "index") {
-                await dispatch('setActivePatientByIndex', {index: src.index})
+                await dispatch('setActivePatientByIndex', {index: src.index});
+            }
+            else if(src.type == "id") {
+                await dispatch('setActivePatientById', {id: src.id});
             }
             else {
-                await dispatch('setActivePatientById', {id: src.id})
+                await dispatch('setActivePatientSearch', {id: src.id});
             }
-            var promise = PionyAPI.getPatientRiskInfo(state.activePatient.postalCode);
-            if (typeof promise !== "undefined") {
-                promise.then((riskLevel) => {
-                    commit('changeActivePatientRisk', {risk: riskLevel});
-                })
-            }
-            else {
-                commit('changeActivePatientRisk', {risk: 'risk not found'});
-            }
+            //put a timeout so that the system has enough time to change the active patient
+            setTimeout(() => {
+                var promise = PionyAPI.getPatientRiskInfo(state.activePatient.postalCode);
+                if (typeof promise !== "undefined") {
+                    promise.then((riskLevel) => {
+                        commit('changeActivePatientRisk', {risk: riskLevel});
+                    })
+                }
+                else {
+                    commit('changeActivePatientRisk', {risk: 'risk not found'});
+                }
+            }, 200);
         },
         deleteActivePatient({ commit, state }, src) {
             var deletedId = state.activePatient.id;
@@ -120,11 +137,14 @@ export default new Vuex.Store({
             if (typeof promise !== "undefined") {
                 promise.then(() => {
                     //dispatch('setPatients');
-                    commit('updatePatient', {patient: src.patient});
                     commit('changeActivePatientById', { patient: src.patient });
+                    commit('updatePatient', {patient: src.patient});
                 })
             }
-        }
+        },
+        changeShowPatientModal({ commit }) {
+            commit('changeShowPatientModal');
+        },
     },
     methods: {
     }
