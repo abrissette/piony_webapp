@@ -41,6 +41,14 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        addNewPatient({ dispatch }, src) {
+            var promise = PionyAPI.addNewPatient(src.newPatient);
+            if (typeof promise !== "undefined") {
+                promise.then(() => {
+                    dispatch('setPatients');
+                })
+            }
+        },
         setPatients({ commit }) {
             var promise = PionyAPI.getPatients();
             if (typeof promise !== "undefined") {
@@ -82,6 +90,15 @@ export default new Vuex.Store({
             if (typeof promise !== "undefined") {
                 promise.then(() => {
                     commit('changeActivePatientById', {patient: {}});
+                })
+            }
+        },
+        updateActivePatient({ commit, state, dispatch }, src) {
+            var promise = PionyAPI.updatePatient(src.patient);
+            if (typeof promise !== "undefined") {
+                promise.then(() => {
+                    dispatch('setPatients');
+                    commit('changeActivePatientById', { patient: src.patient });
                 })
             }
         }

@@ -12,7 +12,7 @@ export default {
                     var patients = response.data;
                     return patients;
                 }).catch ((error) => {
-                    console.log(error);
+                    console.log('getPatients error: '+ error);
                 })
             )
     },
@@ -24,25 +24,34 @@ export default {
                 console.log('returned patient is: ' + JSON.stringify(patient));
                 return patient;
             }).catch ((error) => {
-                console.log(error);
+                console.log('getPatient error:' + error);
             })
         )
     },
     addNewPatient(patient) {
-        axios.post('https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients', {
-            body: patient
-        }).then(response => {
-        }).catch ((error) => {
-            console.log(error);
-        })
+        if(patient) {
+            console.log('patient is: ' + JSON.stringify(patient));
+            return (
+                axios.post('https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients', {
+                    body: patient
+                }).then(response => {
+                }).catch ((error) => {
+                    console.log('addNewPatient error: ' + error);
+                })
+            )
+        }
     },
     deletePatient(id) {
-        var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + id;
-        axios.delete(url).then((response) => {
-            console.log('delete success: ' + JSON.stringify(response));
-        }).catch ((error) => {
-            console.log(error);
-        })
+        if(id) {
+            var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + id;
+            return (
+                axios.delete(url).then((response) => {
+                    console.log('delete success: ' + JSON.stringify(response));
+                }).catch ((error) => {
+                    console.log('deletePatient error: ' + error);
+                })
+            )
+        }
     },
     getPatientRiskInfo(postalCode) {
         if (postalCode) {
@@ -52,7 +61,7 @@ export default {
                         var risk = response.data.properties.code;
                         return risk;
                     }).catch ((error) => {
-                        console.log(error);
+                        console.log('getPatientRiskInfo error: ' + error);
                     })
             );
         }
@@ -61,6 +70,19 @@ export default {
                 resolve('problem getting risk');
             });
             return newPromise;
+        }
+    },
+    updatePatient(patient) {
+        if (patient) {
+            var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + patient.id;
+            console.log('patient update: ' + JSON.stringify(patient));
+            return (
+                axios.put(url, {body: patient}).then((response) => {
+                    console.log(JSON.stringify(response));
+                }).catch((error) => {
+                    console.log('updatePatient error:' + error)
+                })
+            )
         }
     }
 }

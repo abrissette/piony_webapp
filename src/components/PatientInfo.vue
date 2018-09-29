@@ -17,7 +17,7 @@
                     label-for="patientFirstName">
         <b-form-input id="patientFirstName"
                     type="text"
-                    :value="activePatient.firstName"
+                    v-model="patient.firstName"
                     required
                     placeholder="Enter First Name">
         </b-form-input>
@@ -27,7 +27,7 @@
                     label-for="patientLastName">
         <b-form-input id="patientLastName"
                     type="text"
-                    :value="activePatient.lastName"
+                    v-model="patient.lastName"
                     required
                     placeholder="Enter Last Name">
         </b-form-input>
@@ -37,7 +37,7 @@
                     label-for="patientStreetAddress">
         <b-form-input id="patientStreetAddress"
                     type="text"
-                    :value="activePatient.streerAdress"
+                    v-model="patient.streerAdress"
                     placeholder="Enter Street Address">
         </b-form-input>
       </b-form-group>
@@ -46,7 +46,7 @@
                     label-for="patientCity">
         <b-form-input id="patientCity"
                     type="text"
-                    :value="activePatient.city"
+                    v-model="patient.city"
                     placeholder="Enter City">
         </b-form-input>
       </b-form-group>
@@ -55,7 +55,7 @@
                     label-for="patientState">
         <b-form-input id="patientState"
                     type="text"
-                    :value="activePatient.state"
+                    v-model="patient.state"
                     placeholder="Enter State">
         </b-form-input>
       </b-form-group>
@@ -64,7 +64,7 @@
                     label-for="patientPostal">
         <b-form-input id="patientPostal"
                     type="text"
-                    :value="activePatient.postalCode"
+                    v-model="patient.postalCode"
                     required
                     placeholder="Enter Postal">
         </b-form-input>
@@ -74,7 +74,7 @@
                     label-for="patientPhone">
         <b-form-input id="patientPhone"
                     type="text"
-                    :value="activePatient.mobilePhone"
+                    v-model="patient.mobilePhone"
                     placeholder="Enter Phone"
                     required>
         </b-form-input>
@@ -84,15 +84,11 @@
                     label-for="patientStatus">
         <b-form-select id="patientStatus"
                     :options="statuses"
-                    :value="activePatient.status">
+                    v-model="patient.status">
         </b-form-select>
       </b-form-group>
     <b-button type="submit" variant="primary">UPDATE</b-button>
-    <b-button v-on:click="showConfirmationModal()" variant="danger">DELETE</b-button>
-    <b-modal size="sm" hide-footer ref="confirmDeleteModal">
-        Are you sure you want to delete?
-        <b-button v-on:click="deletePatient()" variant="danger">DELETE FOREVER</b-button>
-    </b-modal>
+    <b-button v-b-tooltip.hover title="Make sure you really want to delete this!" v-on:click="deletePatient()" variant="danger">DELETE</b-button>
   </b-form>
 </b-modal>
 </template>
@@ -108,7 +104,7 @@ export default Vue.extend({
     name: 'PatientInfo',
     data () {
         return {
-            patientInfo: {
+            patient: {
             id: '',
             firstName: '',
             lastName: '',
@@ -136,20 +132,23 @@ export default Vue.extend({
           activePatientRisk: 'activePatientRisk',
       })
   },
+  watch: {
+      activePatient: function() {
+          this.patient = Object.assign({}, this.activePatient);
+      }
+  },
   methods: {
       ...mapActions({
           deleteThisPatient: 'deleteActivePatient',
+          updateThisPatient: 'updateActivePatient',
       }),
-      updatePatientInformation (evt) {
-          evt.preventDefault();
+      updatePatientInformation() {
+          this.updateThisPatient({patient: this.patient});
+          this.$refs.patientInformationModal.hide();
       },
       deletePatient() {
           this.deleteThisPatient();
-          this.$refs.confirmDeleteModal.hide();
           this.$refs.patientInformationModal.hide();
-      },
-      showConfirmationModal() {
-          this.$refs.confirmDeleteModal.show();
       },
   },
 })

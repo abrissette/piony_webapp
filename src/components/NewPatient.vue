@@ -1,12 +1,12 @@
 <template>
 <b-modal hide-footer id="newPatientModal" ref="newPatientModal">
-  <b-form class="sm-modal text-center" @submit="onSubmit" @reset="onReset" v-if="show">
+  <b-form class="sm-modal text-center" @reset="onReset" v-if="show">
       <b-form-group id="newFirstNameGroup"
                     label="First Name:"
                     label-for="newFirstName">
         <b-form-input id="newFirstName"
                     type="text"
-                    v-model="form.firstName"
+                    v-model="newPatient.firstName"
                     required
                     placeholder="Enter First Name">
         </b-form-input>
@@ -16,7 +16,7 @@
                     label-for="newLastName">
         <b-form-input id="newLastName"
                     type="text"
-                    v-model="form.lastName"
+                    v-model="newPatient.lastName"
                     required
                     placeholder="Enter Last Name">
         </b-form-input>
@@ -26,7 +26,7 @@
                     label-for="newStreetAddress">
         <b-form-input id="newStreetAddress"
                     type="text"
-                    v-model="form.streerAdress"
+                    v-model="newPatient.streerAdress"
                     placeholder="Enter Street Address">
         </b-form-input>
       </b-form-group>
@@ -35,7 +35,7 @@
                     label-for="newCity">
         <b-form-input id="newCity"
                     type="text"
-                    v-model="form.city"
+                    v-model="newPatient.city"
                     placeholder="Enter City">
         </b-form-input>
       </b-form-group>
@@ -44,7 +44,7 @@
                     label-for="newState">
         <b-form-input id="newState"
                     type="text"
-                    v-model="form.state"
+                    v-model="newPatient.state"
                     placeholder="Enter State">
         </b-form-input>
       </b-form-group>
@@ -53,7 +53,7 @@
                     label-for="newPostal">
         <b-form-input id="newPostal"
                     type="text"
-                    v-model="form.postalCode"
+                    v-model="newPatient.postalCode"
                     required
                     placeholder="Enter Postal">
         </b-form-input>
@@ -63,7 +63,7 @@
                     label-for="newPhone">
         <b-form-input id="newPhone"
                     type="text"
-                    v-model="form.mobilePhone"
+                    v-model="newPatient.mobilePhone"
                     placeholder="Enter Phone"
                     required>
         </b-form-input>
@@ -73,11 +73,11 @@
                     label-for="newStatus">
         <b-form-select id="newStatus"
                     :options="statuses"
-                    v-model="form.status">
+                    v-model="newPatient.status">
         </b-form-select>
       </b-form-group>
-    <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
+    <b-button v-on:click="addPatient" variant="primary">ADD PATIENT</b-button>
+    <b-button type="reset" variant="warning">RESET</b-button>
   </b-form>
 </b-modal>
 </template>
@@ -85,13 +85,14 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import PionyAPI from '../api/Piony.js'
 
 export default Vue.extend({
     name: 'NewPatient',
     data () {
         return {
-            form: {
+            newPatient: {
             firstName: '',
             lastName: '',
             streerAdress: '',
@@ -111,10 +112,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    onSubmit (evt) {
-        evt.preventDefault();
-        PionyAPI.addNewPatient(this.form);
-        this.show =false;
+    ...mapActions({
+        addNewPatient: 'addNewPatient',
+    }),
+    addPatient() {
+        this.addNewPatient({newPatient: this.newPatient});
         this.$refs.newPatientModal.hide();
     },
     onReset (evt) {
