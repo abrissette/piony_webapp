@@ -102,7 +102,6 @@ export default Vue.extend({
             mobilePhone: '',
             conditions: {},
             status: null
-
         },
             statuses: [
                 { text: 'Select One', value: null },
@@ -117,19 +116,29 @@ export default Vue.extend({
     }),
     addPatient() {
         this.addNewPatient({newPatient: this.newPatient});
+        this.newPatient = {
+        firstName: '',
+        lastName: '',
+        streerAdress: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        mobilePhone: '',
+        conditions: {},
+        status: null};
         this.$refs.newPatientModal.hide();
     },
     onReset (evt) {
       evt.preventDefault();
       /* Reset our form values */
-      this.form.firstName = '';
-      this.form.lastName = '';
-      this.form.streerAdress = '';
-      this.form.city = '';
-      this.form.state = '';
-      this.form.postalCode = '';
-      this.form.mobilePhone = '';
-      this.form.status = null;
+      this.newPatient.firstName = '';
+      this.newPatient.lastName = '';
+      this.newPatient.streerAdress = '';
+      this.newPatient.city = '';
+      this.newPatient.state = '';
+      this.newPatient.postalCode = '';
+      this.newPatient.mobilePhone = '';
+      this.newPatient.status = null;
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => { this.show = true });

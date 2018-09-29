@@ -20,6 +20,7 @@ export default new Vuex.Store({
             status: null,
         },
         activePatientRisk: '',
+        newPatientId: 8,
     },
     getters: {
         getActivePatient: state => {
@@ -35,17 +36,36 @@ export default new Vuex.Store({
         },
         changeActivePatientById(state, src) {
             state.activePatient = src.patient;
+            console.log(JSON.stringify(state.activePatient));
         },
         changeActivePatientRisk(state, src) {
             state.activePatientRisk = src.risk;
-        }
+        },
+        addPatient(state, src) {
+            var newPatient = src.patient;
+            newPatient.id = state.newPatientId;
+            state.patients.push(newPatient);
+            state.newPatientId++;
+        },
+        deletePatient(state, src) {
+            var index = state.patients.findIndex(patient => patient.id === src.id);
+            if (index > -1) {
+                state.patients.splice(index, 1);
+            }
+        },
+        updatePatient(state, src) {
+            var index = state.patients.findIndex(patient => patient.id === src.patient.id);
+            if (index > -1) {
+                state.patients[index] = src.patient;
+            }
+        },
     },
     actions: {
-        addNewPatient({ dispatch }, src) {
+        addNewPatient({ dispatch, commit }, src) {
             var promise = PionyAPI.addNewPatient(src.newPatient);
             if (typeof promise !== "undefined") {
                 promise.then(() => {
-                    dispatch('setPatients');
+                    commit('addPatient', {patient: src.newPatient});
                 })
             }
         },
@@ -86,9 +106,11 @@ export default new Vuex.Store({
             }
         },
         deleteActivePatient({ commit, state }, src) {
-            var promise = PionyAPI.deletePatient(state.activePatient.id);
+            var deletedId = state.activePatient.id;
+            var promise = PionyAPI.deletePatient(deletedId);
             if (typeof promise !== "undefined") {
                 promise.then(() => {
+                    commit('deletePatient', {id: deletedId});
                     commit('changeActivePatientById', {patient: {}});
                 })
             }
@@ -97,7 +119,8 @@ export default new Vuex.Store({
             var promise = PionyAPI.updatePatient(src.patient);
             if (typeof promise !== "undefined") {
                 promise.then(() => {
-                    dispatch('setPatients');
+                    //dispatch('setPatients');
+                    commit('updatePatient', {patient: src.patient});
                     commit('changeActivePatientById', { patient: src.patient });
                 })
             }

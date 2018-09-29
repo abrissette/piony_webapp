@@ -21,7 +21,7 @@ export default {
         return (
             axios.get(url).then((response) => {
                 var patient = response.data;
-                console.log('returned patient is: ' + JSON.stringify(patient));
+                console.log('getPatient patient: ' + JSON.stringify(patient));
                 return patient;
             }).catch ((error) => {
                 console.log('getPatient error:' + error);
@@ -30,7 +30,6 @@ export default {
     },
     addNewPatient(patient) {
         if(patient) {
-            console.log('patient is: ' + JSON.stringify(patient));
             return (
                 axios.post('https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients', {
                     body: patient
@@ -62,6 +61,7 @@ export default {
                         return risk;
                     }).catch ((error) => {
                         console.log('getPatientRiskInfo error: ' + error);
+                        return 'risk not found for this postal code';
                     })
             );
         }
@@ -75,7 +75,6 @@ export default {
     updatePatient(patient) {
         if (patient) {
             var url = 'https://virtserver.swaggerhub.com/TactioHealth/piony/1.0.2/patients/' + patient.id;
-            console.log('patient update: ' + JSON.stringify(patient));
             return (
                 axios.put(url, {body: patient}).then((response) => {
                     console.log(JSON.stringify(response));

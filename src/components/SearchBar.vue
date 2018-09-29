@@ -9,9 +9,7 @@
         <b-modal ok-only ref="invalidPatientModal">
             <p>Patient with the requested id does not exist</p>
         </b-modal>
-        <b-modal hide-footer ref="patientInfoModal">
-            <PatientInfo/>
-        </b-modal>
+        <PatientInfo/>
     </div>
 </template>
 
@@ -45,7 +43,7 @@ export default Vue.extend({
         showSearchedPatientInformation() {
             if (this.searchInput) {
                 this.populateActivePatient({type: 'id', id: this.searchInput});
-                this.$refs.patientInfoModal.show();
+                this.$refs.patientInformationModal.show();
             }
             else {
                 this.$refs.invalidPatientModal.show()
