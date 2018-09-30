@@ -96,8 +96,6 @@ export default new Vuex.Store({
             }
         },
         setActivePatientSearch({ commit, state }, src) {
-            console.log('requested id: ' + src.id);
-            console.log('all patients: ' + JSON.stringify(state.patients));
             var index = state.patients.findIndex(patient => patient.id == src.id);
             console.log('found index: ' + index);
             if (index > -1) {
