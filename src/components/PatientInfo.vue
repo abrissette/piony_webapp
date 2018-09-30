@@ -159,7 +159,6 @@ export default Vue.extend({
 })
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .sm-modal {
     max-height: 450px;
