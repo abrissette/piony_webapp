@@ -6,9 +6,9 @@
           <b-btn v-b-modal.patientInfoModal v-on:click="showSearchedPatientInformation()" variant="primary">Search</b-btn>
         </b-input-group-append>
         </b-input-group>
-        <b-modal ok-only ref="invalidPatientModal">
+        <!-- <b-modal ok-only ref="invalidPatientModal">
             <p>Patient with the requested id does not exist</p>
-        </b-modal>
+        </b-modal> -->
     </div>
 </template>
 
@@ -38,13 +38,16 @@ export default Vue.extend({
     methods: {
         ...mapActions({
             populateActivePatient: 'setActivePatientRisk',
+            setShowPatientInformation: 'setShowPatientInformation',
         }),
         showSearchedPatientInformation() {
             if (this.searchInput) {
+                this.setShowPatientInformation({set: true});
                 this.populateActivePatient({type: 'search', id: this.searchInput});
             }
             else {
-                this.$refs.invalidPatientModal.show()
+                this.setShowPatientInformation({set: false});
+                // this.$refs.invalidPatientModal.show()
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
 <b-modal hide-footer id="patientInfoModal" ref="patientInformationModal">
-  <b-form class="sm-modal text-center" @submit="updatePatientInformation">
+  <b-form v-if="showPatientInformation" class="sm-modal text-center" @submit="updatePatientInformation">
       <b-form-group id="patientRiskGroup"
                     label="Risk:"
                     label-for="patientRisk">
@@ -90,6 +90,9 @@
     <b-button type="submit" variant="primary">UPDATE</b-button>
     <b-button v-b-tooltip.hover title="Make sure you really want to delete this!" v-on:click="deletePatient()" variant="danger">DELETE</b-button>
   </b-form>
+  <p v-else>
+      Patient with requested id not does exist
+  </p>
 </b-modal>
 </template>
 
@@ -131,6 +134,7 @@ export default Vue.extend({
           activePatientRisk: 'activePatientRisk',
           activePatient: 'activePatient',
           showPatientModal: 'showPatientModal',
+          showPatientInformation: 'showPatientInformation',
       })
   },
   watch: {

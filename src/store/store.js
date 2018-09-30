@@ -22,10 +22,14 @@ export default new Vuex.Store({
         activePatientRisk: '',
         newPatientId: 8,
         showPatientModal : false,
+        showPatientInformation: false,
     },
     getters: {
     },
     mutations: {
+        setShowPatientInformation(state, src) {
+            state.showPatientInformation = src.setBoolean;
+        },
         changeShowPatientModal(state) {
             state.showPatientModal = !state.showPatientModal;
         },
@@ -37,7 +41,6 @@ export default new Vuex.Store({
         },
         changeActivePatientById(state, src) {
             state.activePatient = src.patient;
-            console.log(JSON.stringify(state.activePatient));
         },
         changeActivePatientRisk(state, src) {
             state.activePatientRisk = src.risk;
@@ -57,7 +60,10 @@ export default new Vuex.Store({
         updatePatient(state, src) {
             var index = state.patients.findIndex(patient => patient.id == src.patient.id);
             if (index > -1) {
-                state.patients[index] = src.patient;
+                //workaround because if you insert directly via state.patients[index] = src.patient,
+                //it does not see it as a change in state.
+                state.patients.splice(index,1);
+                state.patients.splice(index, 0, src.patient);
             }
         },
     },
@@ -95,8 +101,10 @@ export default new Vuex.Store({
             var index = state.patients.findIndex(patient => patient.id == src.id);
             console.log('found index: ' + index);
             if (index > -1) {
-                console.log('patient: ' + JSON.stringify(state.patients[index]));
                 commit('changeActivePatientById', {patient: state.patients[index]});
+            }
+            else {
+                commit('setShowPatientInformation', {setBoolean: false});
             }
         },
         async setActivePatientRisk({ commit, dispatch, state }, src) {
@@ -145,6 +153,9 @@ export default new Vuex.Store({
         changeShowPatientModal({ commit }) {
             commit('changeShowPatientModal');
         },
+        setShowPatientInformation({ commit }, src) {
+            commit('setShowPatientInformation', {setBoolean: src.set});
+        }
     },
     methods: {
     }

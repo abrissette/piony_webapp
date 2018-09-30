@@ -60,8 +60,10 @@ export default Vue.extend({
             loadPatients: 'setPatients',
             populateActivePatient: 'setActivePatientRisk',
             showModal: 'changeShowPatientModal',
+            setShowPatientInformation: 'setShowPatientInformation',
         }),
         showPatientInformation(index) {
+            this.setShowPatientInformation({set: true});
             this.populateActivePatient({type: 'index', index: index});
         }
     },
