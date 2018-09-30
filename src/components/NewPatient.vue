@@ -1,8 +1,9 @@
 <template>
 <b-modal hide-footer id="newPatientModal" ref="newPatientModal">
   <b-form class="sm-modal text-center" @reset="onReset" v-if="show">
+      <p class="fields-required">Fields with * are required</p>
       <b-form-group id="newFirstNameGroup"
-                    label="First Name:"
+                    label="First Name*:"
                     label-for="newFirstName">
         <b-form-input id="newFirstName"
                     type="text"
@@ -12,7 +13,7 @@
         </b-form-input>
       </b-form-group>
       <b-form-group id="newLastNameGroup"
-                    label="Last Name:"
+                    label="Last Name*:"
                     label-for="newLastName">
         <b-form-input id="newLastName"
                     type="text"
@@ -20,6 +21,26 @@
                     required
                     placeholder="Enter Last Name">
         </b-form-input>
+      <b-form-group id="newPhoneGroup"
+                      label="Phone Number*:"
+                      label-for="newPhone">
+          <b-form-input id="newPhone"
+                      type="text"
+                      v-model="newPatient.mobilePhone"
+                      placeholder="Enter Phone"
+                      required>
+          </b-form-input>
+      </b-form-group>
+      <b-form-group id="newPostalGroup"
+                    label="Postal Code*:"
+                    label-for="newPostal">
+        <b-form-input id="newPostal"
+                    type="text"
+                    v-model="newPatient.postalCode"
+                    required
+                    placeholder="Enter Postal">
+        </b-form-input>
+      </b-form-group>
       </b-form-group>
       <b-form-group id="newStreetAddressGroup"
                     label="Street Address:"
@@ -46,26 +67,6 @@
                     type="text"
                     v-model="newPatient.state"
                     placeholder="Enter State">
-        </b-form-input>
-      </b-form-group>
-      <b-form-group id="newPostalGroup"
-                    label="Postal:"
-                    label-for="newPostal">
-        <b-form-input id="newPostal"
-                    type="text"
-                    v-model="newPatient.postalCode"
-                    required
-                    placeholder="Enter Postal">
-        </b-form-input>
-      </b-form-group>
-      <b-form-group id="newPhoneGroup"
-                    label="Phone:"
-                    label-for="newPhone">
-        <b-form-input id="newPhone"
-                    type="text"
-                    v-model="newPatient.mobilePhone"
-                    placeholder="Enter Phone"
-                    required>
         </b-form-input>
       </b-form-group>
       <b-form-group id="newStatusGroup"
@@ -152,6 +153,11 @@ export default Vue.extend({
 .sm-modal {
     height: 450px;
     overflow-y: auto;
+}
+
+.fields-required {
+    font-size: 10px;
+    color: red;
 }
 
 </style>
