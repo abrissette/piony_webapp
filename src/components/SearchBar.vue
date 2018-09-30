@@ -6,9 +6,6 @@
           <b-btn v-b-modal.patientInfoModal v-on:click="showSearchedPatientInformation()" variant="primary">Search</b-btn>
         </b-input-group-append>
         </b-input-group>
-        <!-- <b-modal ok-only ref="invalidPatientModal">
-            <p>Patient with the requested id does not exist</p>
-        </b-modal> -->
     </div>
 </template>
 
@@ -47,7 +44,6 @@ export default Vue.extend({
             }
             else {
                 this.setShowPatientInformation({set: false});
-                // this.$refs.invalidPatientModal.show()
             }
         }
     }
