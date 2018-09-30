@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper home">
+  <div class="pb-3 wrapper home">
     <b-container class="mb-4">
         <b-row>
             <b-col sm="8" class="mb-3">
@@ -13,14 +13,16 @@
             </b-col>
         </b-row>
     </b-container>
-    <b-container class=".patient-list-container">
+    <b-container class="list-container">
         <h3 class="text-center">Patient List:</h3>
-        <b-list-group>
-            <b-list-group-item button v-b-modal.patientInfoModal v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
-                {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }} | id: {{ patient.id }}
-            </b-list-group-item>
-            <patientInfo/>
-        </b-list-group>
+        <div class="pb-3 patient-list-container">
+            <b-list-group>
+                <b-list-group-item button v-b-modal.patientInfoModal v-for="(patient, index) in patients" v-bind:key="patient.id" v-on:click="showPatientInformation(index)">
+                    {{ patient.firstName }} {{ patient.lastName}} | {{ patient.streerAdress }}, {{ patient.city }}, {{ patient.state }} | id: {{ patient.id }}
+                </b-list-group-item>
+                <patientInfo/>
+            </b-list-group>
+        </div>
     </b-container>
   </b-container>
   </div>
@@ -81,7 +83,7 @@ export default Vue.extend({
 }
 
 .patient-list-container {
-    max-height: 700px;
+    max-height: 460px;
     overflow-y: auto;
 }
 

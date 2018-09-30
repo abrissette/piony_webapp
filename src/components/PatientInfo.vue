@@ -1,6 +1,6 @@
 <template>
 <b-modal hide-footer id="patientInfoModal" ref="patientInformationModal">
-  <b-form v-if="showPatientInformation" class="sm-modal text-center" @submit="updatePatientInformation">
+  <b-form v-if="showPatientInformation" class="sm-modal text-center">
       <b-form-group id="patientRiskGroup"
                     label="Risk:"
                     label-for="patientRisk">
@@ -87,7 +87,7 @@
                     v-model="patient.status">
         </b-form-select>
       </b-form-group>
-    <b-button type="submit" variant="primary">UPDATE</b-button>
+    <b-button v-on:click="updatePatientInformation()" variant="primary">UPDATE</b-button>
     <b-button v-b-tooltip.hover title="Make sure you really want to delete this!" v-on:click="deletePatient()" variant="danger">DELETE</b-button>
   </b-form>
   <p v-else>
